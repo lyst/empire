@@ -1,8 +1,14 @@
 .PHONY: build test bootstrap
 
-REPO = remind101/empire
+REPO = lyst/empire
 TYPE ?= patch
 ARTIFACTS ?= build
+
+build_old_golang_env:
+	docker build -f Dockerfile.test -t ${REPO}:test .
+
+run_old_golang: build_old_golang_env
+	docker run -it -u $(shell id -u) -v $(shell pwd):/go/src/github.com/remind101/empire ${REPO}:test
 
 cmds: build/empire build/emp
 

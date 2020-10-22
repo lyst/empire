@@ -6,5 +6,5 @@ RUN apt-get update -yy && \
 
 WORKDIR /go/src/github.com/remind101/empire
 
-ENTRYPOINT ["make"]
-CMD ["test"]
+# ENTRYPOINT ["make"]
+CMD ["bash"]

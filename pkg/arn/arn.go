@@ -35,6 +35,12 @@ func Parse(arn string) (*ARN, error) {
 		return nil, ErrInvalidARN
 	}
 
+	// TODO: Survive with lower fix?
+	// if strings.Count(p[5], "/") == 2 {
+	// 	// Cope with cluster-now-in-ARN like
+	// 	// arn:aws:ecs:us-east-1:249285743859:service/my-cluster/acme-inc:web
+	// }
+
 	a := &ARN{
 		ARN:      p[0],
 		AWS:      p[1],
@@ -63,7 +69,8 @@ func (a *ARN) String() string {
 // SplitResource splits the Resource section of an ARN into its type and id
 // components.
 func SplitResource(r string) (resource, id string, err error) {
-	p := strings.Split(r, "/")
+	// p := strings.Split(r, "/")
+	p := strings.SplitN(r, "/", 2)
 
 	if len(p) != 2 {
 		err = ErrInvalidResource
